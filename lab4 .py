@@ -6,8 +6,7 @@ def load_matrix(filename):
 
 def print_matrix(matrix, name):
     print(f"\n{name}:")
-    for row in matrix:
-        print(" ".join(f"{x:4}" for x in row))
+    print(matrix)
 
 def split_blocks(A):
     h = A.shape[0] // 2
@@ -44,7 +43,7 @@ def build_F(A):
     return F
 
 def compute_result(A, F, K):
-    try:
+
         if np.linalg.det(A) > np.trace(F):
             print("\nОпределитель A больше суммы диагональных элементов F")
             return A @ A.T - K * F
@@ -52,8 +51,7 @@ def compute_result(A, F, K):
             print("\nОпределитель A меньше или равен сумме диагональных элементов F")
             G = np.tril(A)
             return (np.linalg.inv(A) + G - np.linalg.inv(F)) * K
-    except np.linalg.LinAlgError:
-        return "Ошибка: одна из матриц необратима"
+
 
 def plot_graphs(F):
     plt.figure(figsize=(15, 4))
@@ -88,4 +86,3 @@ def main():
     plot_graphs(F)
 
 main()
-
