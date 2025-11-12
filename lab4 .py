@@ -19,7 +19,7 @@ def split_blocks(A):
 
 def build_F(A):
     F = A.copy()
-    E, B, D, C = split_blocks(A)
+    D, E, C, B = split_blocks(A)
     
     zeros_perimeter_C = np.sum(C[0, :] == 0) + np.sum(C[-1, :] == 0) + \
                         np.sum(C[:, 0] == 0) + np.sum(C[:, -1] == 0)
@@ -88,3 +88,4 @@ def main():
     plot_graphs(F)
 
 main()
+
