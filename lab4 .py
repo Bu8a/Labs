@@ -9,10 +9,10 @@ def print_matrix(matrix, name):
 
 def split_blocks(A):
     h = A.shape[0] // 2
-    E = A[:h, :h]
-    B = A[:h, h:]
-    D = A[h:, :h]
-    C = A[h:, h:]
+    D = A[:h, :h]
+    E = A[:h, h:]
+    C = A[h:, :h]
+    B = A[h:, h:]
     return D, E, C, B
 
 def build_F(A):
