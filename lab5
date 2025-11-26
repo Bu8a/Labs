@@ -1,0 +1,77 @@
+import timeit
+from itertools import combinations
+#IT-предприятие набирает сотрудников: 1 мидла, 3 синьера, 2 юниора.
+# Сформировать все возможные варианты заполнения вакантных мест
+# , если имеются 7 претендентов
+candidates = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+
+def generate_algo(cands):
+    result = []
+    for mid in cands:
+        rem1 = [c for c in cands if c != mid]
+        for seniors in combinations(rem1, 3):
+            rem2 = [c for c in rem1 if c not in seniors]
+            for juniors in combinations(rem2, 2):
+                result.append((mid, seniors, juniors))
+    return result
+
+def generate_python(cands):
+    return [
+        (mid[0], seniors, juniors)
+        for mid in combinations(cands, 1)
+        for seniors in combinations([c for c in cands if c not in mid], 3)
+        for juniors in combinations([c for c in cands if c not in mid and c not in seniors], 2)
+    ]
+
+salary = {'A': 50, 'B': 55, 'C': 45, 'D': 60, 'E': 40, 'F': 65, 'G': 70}
+skill  = {'A': 80, 'B': 85, 'C': 75, 'D': 90, 'E': 70, 'F': 95, 'G': 88}
+budget = 350
+
+def filter_and_optimize(assignments):
+    valid = []
+    for mid, seniors, juniors in assignments:
+        total_sal = salary[mid] + sum(salary[s] for s in seniors) + sum(salary[j] for j in juniors)
+        if total_sal <= budget:
+            valid.append((mid, seniors, juniors))
+    best = []
+    max_skill = 0
+    for mid, seniors, juniors in valid:
+        total_sk = skill[mid] + sum(skill[s] for s in seniors) + sum(skill[j] for j in juniors)
+        if total_sk > max_skill:
+            max_skill = total_sk
+            best = [(mid, seniors, juniors)]
+        elif total_sk == max_skill:
+            best.append((mid, seniors, juniors))
+    return best, max_skill
+
+def main():
+    algo_list = generate_algo(candidates)
+    py_list   = generate_python(candidates)
+
+    print("Первые 5 (алгоритмический):")
+    for x in algo_list[:5]:
+        print(f"  Mid={x[0]}, Seniors={x[1]}, Juniors={x[2]}")
+    print("\nПервые 5 (python/itertools):")
+    for x in py_list[:5]:
+        print(f"  Mid={x[0]}, Seniors={x[1]}, Juniors={x[2]}")
+
+    print(f"\nВсего вариантов: {len(py_list)}\n")
+
+    t_alg = timeit.timeit(lambda: generate_algo(candidates), number=100)
+    t_py  = timeit.timeit(lambda: generate_python(candidates), number=100)
+    print(f"Скорость (100 повторов): алгоритмический = {t_alg:.4f}s, python = {t_py:.4f}s\n")
+
+    print(f"Условие ограничения: суммарная зарплата ≤ {budget}k")
+    print("Целевая функция: максимизация суммарного навыка\n")
+
+    best, max_skill = filter_and_optimize(py_list)
+    print(f"Оптимальных вариантов: {len(best)}")
+    if best:
+        mid, seniors, juniors = best[0]
+        print(f"Самый оптимальный вариант (макс. навык = {max_skill}):")
+        print(f"  Mid={mid}, Seniors={seniors}, Juniors={juniors}")
+    else:
+        print("Нет допустимых вариантов по бюджету.")
+
+if __name__ == "__main__":
+    main()
