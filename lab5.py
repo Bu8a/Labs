@@ -48,11 +48,11 @@ def main():
     algo_list = generate_algo(candidates)
     py_list   = generate_python(candidates)
 
-    print("Первые 5 (алгоритмический):")
-    for x in algo_list[:5]:
+    print("Все результаты (алгоритмический):")
+    for x in algo_list:
         print(f"  Mid={x[0]}, Seniors={x[1]}, Juniors={x[2]}")
-    print("\nПервые 5 (python/itertools):")
-    for x in py_list[:5]:
+    print("\nВсе результаты (python/itertools):")
+    for x in py_list:
         print(f"  Mid={x[0]}, Seniors={x[1]}, Juniors={x[2]}")
 
     print(f"\nВсего вариантов: {len(py_list)}\n")
