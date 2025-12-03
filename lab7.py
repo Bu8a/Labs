@@ -67,7 +67,7 @@ entry_num.insert(0, "7")
 ttk.Label(frm, text="Бюджет:").grid(row=1, column=0, sticky="w")
 entry_budget = ttk.Entry(frm, width=10)
 entry_budget.grid(row=1, column=1, padx=5, pady=5)
-entry_budget.insert(0, "300")
+entry_budget.insert(0, "3000")
 
 btn = ttk.Button(frm, text="Запустить", command=on_run)
 btn.grid(row=2, column=0, columnspan=2, pady=5)
