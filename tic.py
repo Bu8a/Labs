@@ -12,7 +12,7 @@ def create_pole():
     for i in range(3):
         row_buttons = []
         for j in range(3):
-            button = tk.Button(window, text="", font=("Veranda", 21, "bold"), fg="navy", bg="lightblue", activebackground="steelblue", width=5, height=2, command=lambda row=i, col=j: hod_player_1(row, col))
+            button = tk.Button(window, text="", font=("Veranda", 21, "bold"), fg="navy", bg="grey", activebackground="steelblue", width=5, height=2, command=lambda row=i, col=j: hod_player_1(row, col))
             button.grid(row=i, column=j, padx=2, pady=2)
             row_buttons.append(button)
         buttons.append(row_buttons)
